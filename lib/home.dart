@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                           context: context,
                           builder: (context) {
                             return Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(13.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [

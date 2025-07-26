@@ -27,6 +27,9 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          namecontroller.clear();
+          phonecontroller.clear();
+          addresscontroller.clear();
           showDialog(
             context: context,
             builder: (context) {
@@ -123,16 +126,130 @@ class _HomeState extends State<Home> {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                    IconButton(
+                      onPressed: () {
+                        namecontroller.text = studentdata[index]['Name'];
+                        phonecontroller.text = studentdata[index]['Phone'];
+                        addresscontroller.text = studentdata[index]['Address'];
+                        showModalBottomSheet(
+                          backgroundColor: Colors.white,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Update",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextFormField(
+                                    controller: namecontroller,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      label: Text('Name'),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  TextFormField(
+                                    controller: phonecontroller,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      label: Text('Phone Number'),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  TextFormField(
+                                    controller: addresscontroller,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      label: Text('Address'),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  SizedBox(
+                                    height: 50,
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        updatestudent(
+                                          studentdata[index].id,
+                                          namecontroller.text,
+                                          phonecontroller.text,
+                                          addresscontroller.text,
+                                          context,
+                                        );
+                                      },
+                                      child: Text(
+                                        'Add Student',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(
+                                          0xFF0023E7,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        deletestudent(studentdata[index].id, context);
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
                   ],
                 ),
-                title: Text(studentdata[index]['Name']),
+                title: Text(
+                  studentdata[index]['Name'],
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(studentdata[index]['Phone']),
-                    Text(studentdata[index]['Address']),
+                    Text(
+                      studentdata[index]['Phone'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        color: Colors.black45,
+                      ),
+                    ),
+                    Text(
+                      studentdata[index]['Address'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        color: Colors.black45,
+                      ),
+                    ),
                   ],
                 ),
               );
